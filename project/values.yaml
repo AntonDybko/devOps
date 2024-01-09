@@ -1,0 +1,15 @@
+global:
+  postgresql:
+    auth:
+      existingSecret: psql-secret
+primary:
+  initdb:
+    scriptsConfigMap: init-script
+  resources:
+    limits:
+      memory: "2Gi"
+      cpu: "500m"
+  persistence:
+    existingClaim: pvc-pstgr-fixed
+  volumePermissions:
+    enabled: true

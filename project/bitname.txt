@@ -1,0 +1,20 @@
+choco install kubernetes-helm
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm repo update
+
+helm install default bitnami/postgresql --set persistence.existingClaim=postgresql-pv-claim --set volumePermissions.enabled=true
+
+export POSTGRES_PASSWORD=$(kubectl get secret --namespace default psql-test-postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
+
+echo $POSTGRES_PASSWORD
+
+kubectl port-forward --namespace default svc/default-postgresql 5432:5432
+
+
+echo $(kubectl get secret --namespace default psql-secret -o jsonpath="{.data.postgres-password}")
+echo $(kubectl get secret --namespace default psql-secret -o jsonpath="{.data.postgresql-password}")
+PGPASSWORD=admin psql -U anton -d games -p 5432
+PGPASSWORD=admin psql -U postgres -d postgres -p 5432
+kubectl get pod psql-postgresql-0 -o yaml
