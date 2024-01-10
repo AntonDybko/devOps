@@ -36,10 +36,11 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build('r4t00r/apb_project_api:1.0.0')
+                dir('project') {
+                    script {
+                        docker.build('r4t00r/apb_project_api:1.0.0')
+                    }
                 }
-            }
         }
 
         stage('Push Docker Image') {
