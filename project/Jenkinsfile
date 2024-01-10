@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+        options {
+            timeout(10)
+            gitLabConnection('GitLab')
+        }
+        triggers {
+            gitlab(
+                triggerOnPush: true,
+                triggerOnMergeRequest: true,
+                branchFilterType: 'All',
+                addVoteOnMergeRequest: true)
+        }
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                docker { image 'node:latest' }
+            }
+            steps {
+                dir('backend') {
+                    script {
+                        sh 'npm install'
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('r4t00r/apb_project_api:1.0.0')
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    }
+                }
+
+                script {
+                    sh 'docker push r4t00r/apb_project_api:1.0.0'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline success!'
+        }
+        failure {
+            echo 'Pipeline error.'
+        }
+    }
+}
