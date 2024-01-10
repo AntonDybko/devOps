@@ -20,19 +20,19 @@ pipeline {
             }
         }
 
-        /*stage('Test') {
+        stage('Test') {
             agent {
                 docker { image 'node:latest' }
             }
             steps {
-                dir('pgApi') {
+                dir('projekt/pgApi') {
                     script {
                         sh 'npm install'
                         sh 'npm run test'
                     }
                 }
             }
-        }*/
+        }
 
         stage('Build Docker Image') {
             steps {
