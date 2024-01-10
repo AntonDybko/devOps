@@ -25,7 +25,7 @@ pipeline {
                 docker { image 'node:latest' }
             }
             steps {
-                dir('projekt') {
+                dir('project/pgApi') {
                     script {
                         sh 'npm install'
                         sh 'npm run test'
