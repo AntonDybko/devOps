@@ -7,3 +7,4 @@ data:
   POSTGRES_USER: postgres
   POSTGRES_HOST: api-postgresql
   POSTGRES_PORT: "5432"
+  PORT: 8000

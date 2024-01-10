@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { app } = require("./server.js");
+const { server } = require("./server.js");
 const apiUrl = "http://localhost:8000";
 
 describe('Testy serwera', () => {
@@ -8,7 +8,9 @@ describe('Testy serwera', () => {
     const response = await axios.get(`${apiUrl}/healthz`);
     expect(response.status).toBe(200);
   });
+  
   afterAll(() => {
-    app.close;
+    console.log('hello')
+    server.close();
   });
 });
