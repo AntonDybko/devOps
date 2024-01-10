@@ -38,7 +38,7 @@ pipeline {
             steps {
                 dir('project') {
                     script {
-                        docker.build('r4t00r/apb_project_api:1.0.0')
+                        docker.build('r4t00r/apb_project_api:2.0.0')
                     }
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
                 }
 
                 script {
-                    sh 'docker push r4t00r/apb_project_api:1.0.0'
+                    sh 'docker push r4t00r/apb_project_api:2.0.0'
                 }
             }
         }
