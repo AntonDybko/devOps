@@ -41,6 +41,7 @@ pipeline {
                         docker.build('r4t00r/apb_project_api:1.0.0')
                     }
                 }
+            }
         }
 
         stage('Push Docker Image') {
