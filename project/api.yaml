@@ -23,13 +23,13 @@ spec:
           readinessProbe:
             httpGet:
               path: /db-check
-              port: 8000
+              port: ${PORT}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 8000
+              port: ${PORT}
             initialDelaySeconds: 2
             periodSeconds: 10
           resources:
@@ -45,7 +45,7 @@ spec:
             - configMapRef:
                 name: configmap
           ports:
-            - containerPort: 8000
+            - containerPort: ${PORT}
 ---
 apiVersion: v1
 kind: Service
@@ -56,7 +56,7 @@ spec:
     app: api
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: ${PORT}
+      targetPort: ${PORT}
   type: NodePort
 
