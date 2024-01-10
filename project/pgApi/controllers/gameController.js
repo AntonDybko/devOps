@@ -8,6 +8,16 @@ const gameController = {
             res.status(200).json(results.rows);
         });
     },
+    getGame: (req, res) => {
+        pool.query(queries.getGame, (err, results) => {
+            if (err) res.status(500).json({ error: "Internal server error" });
+            if (results.rowCount === 1) {
+                res.status(200).json(results.rows[0]);
+            } else {
+                res.status(404).json({ error: "Game not found" });
+            }
+        });
+    },
     postGame: (req, res) => {
         const newGame = req.body;
         pool.query(queries.checkGameExists, [newGame.title], (err, results) => {

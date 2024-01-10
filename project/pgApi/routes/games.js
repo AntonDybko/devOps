@@ -62,6 +62,34 @@ router.get("/", gameController.getGames);
 
 /**
  * @swagger
+ * /games/{gameId}:
+ *      get:
+ *          summary: get an existing game
+ *          tags: [Games]
+ *          parameters:
+ *            - in: path
+ *              name: gameId
+ *              schema:
+ *                  type: string
+ *              required: true
+ *              description: the game id
+ *          responses:
+ *              200:
+ *                  description: game successfully found
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: '#/components/schemas/Game'
+ *              404:
+ *                  description: game not found
+ *              500:
+ *                  description: internal server error
+ * 
+ */
+ router.get("/:gameId", gameController.getGame);
+
+/**
+ * @swagger
  * /games:
  *      post:
  *          summary: create a new game
