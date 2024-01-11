@@ -20,7 +20,7 @@ pipeline {
         }
 
     stages {
-        stage('Test api') {
+        /*stage('Test api') {
             agent {
                 docker { image 'node:latest' }
             }
@@ -32,7 +32,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Test connection to database'){
             steps{
@@ -44,6 +44,7 @@ pipeline {
                             docker.image('r4t00r/apb_project_api:6.0.0').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
 
                                 sh 'sleep 10'
+                                sh 'npm install'
                                 sh "npm run test"
                             }
                      }
