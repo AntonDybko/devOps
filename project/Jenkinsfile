@@ -44,7 +44,7 @@ pipeline {
 
                             docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
                                 dir('project/pgApi') {
-                                    sh 'sleep 30'
+                                    sh 'sleep 10'
                                     sh 'npm install'
                                     sh "npm run test"
                                 }
