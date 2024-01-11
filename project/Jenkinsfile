@@ -37,7 +37,7 @@ pipeline {
         stage('Test api'){
             steps{
                 script{
-                    docker.build('postgres-container', './testDb')
+                    docker.build('postgres-container', './project/testDb')
 
                      docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
 
