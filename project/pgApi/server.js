@@ -11,10 +11,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-const pool = require("../dbConfig");
+//const pool = require("../dbConfig");
 
 
-async function createAlbumsTable() {
+/*async function createAlbumsTable() {
     try {
       const query = `
         CREATE TABLE IF NOT EXISTS games (
@@ -33,7 +33,7 @@ async function createAlbumsTable() {
     }
   }
   
-await createAlbumsTable();
+await createAlbumsTable();*/
 
 app.get('/healthz', healthController.healthCheck);
 app.get('/db-check', healthController.healthCheckOfDb);
