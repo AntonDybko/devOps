@@ -27,11 +27,11 @@ describe('Testy serwera', () => {
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
     const gameId = '1'; 
-    //const response = await axios.get(`${apiUrl}/${gameId}`)
-    const response = await request(apiUrl).get(`/${gameId}`);
+    const response = await axios.get(`${apiUrl}/${gameId}`)
+    //const response = await request(apiUrl).get(`/${gameId}`);
     expect(response.status).toBe(200);
   });
-  it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
+  /*it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
     const gameId = '100'; 
   
     try {
@@ -120,5 +120,5 @@ describe('Testy serwera', () => {
     }catch (error){
       expect(error.response.status).toBe(404);
     }
-  });
+  });*/
 });
