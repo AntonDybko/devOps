@@ -42,7 +42,7 @@ pipeline {
 
                     docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT} -v ./project/testDb/init.sql:/docker-entrypoint-initdb.d/init.sql") { postgresContainer ->
 
-                            docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
+                            docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
                                 dir('project/pgApi') {
                                     sh 'sleep 10'
                                     sh 'npm install'
