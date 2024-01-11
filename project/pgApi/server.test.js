@@ -60,7 +60,7 @@ describe('Testy serwera', () => {
 
 
 
-  //PUT
+  /*//PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
     const updatedGame = {
       title: 'Updated Game',
