@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-        environment{
+        /*environment{
             JENKINS_CONTAINER_DB_PORT = "5432"
             JENKINS_CONTAINER_DB_NAME = "postgres"
             JENKINS_CONTAINER_APP_PORT = "8000"
@@ -17,7 +17,7 @@ pipeline {
                 triggerOnMergeRequest: true,
                 branchFilterType: 'All',
                 addVoteOnMergeRequest: true)
-        }
+        }*/
 
     stages {
 
