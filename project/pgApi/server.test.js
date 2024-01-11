@@ -6,6 +6,9 @@ const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 
 describe('Testy serwera', () => {
+  beforeEach(async () => {
+    jest.setTimeout(1000)
+  })
   //GET
   it('Powinien zwrócić status 200 dla GET /', async () => {
     const response = await axios.get(`${apiUrl}/`);
