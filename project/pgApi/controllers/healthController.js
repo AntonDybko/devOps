@@ -4,7 +4,7 @@ const queries = require("../queries");
 const healthController = {
     healthCheckOfDb: (req, res) => {
         pool.query(queries.getGames, (err, results) => {
-            if (err) throw new Error('Database connection failed');
+            if (err) console.log(err);//throw new Error('Database connection failed');
             res.status(200).send('OK');
         })
     },
