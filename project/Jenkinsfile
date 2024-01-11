@@ -42,7 +42,7 @@ pipeline {
 
                     docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
 
-                            docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
+                            docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
                                 dir('project/pgApi') {
                                     sh 'sleep 30'
                                     sh 'npm install'
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 dir('project') {
                     script {
-                        docker.build('r4t00r/apb_project_api:7.0.0')
+                        docker.build('r4t00r/apb_project_api:8.0.0')
                     }
                 }
             }
@@ -76,7 +76,7 @@ pipeline {
                 }
 
                 script {
-                    sh 'docker push r4t00r/apb_project_api:6.0.0'
+                    sh 'docker push r4t00r/apb_project_api:8.0.0'
                 }
             }
         }
