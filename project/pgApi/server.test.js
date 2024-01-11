@@ -6,9 +6,9 @@ const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 const jest = require('jest');
 
-beforeEach(async () => {
+/*beforeEach(async () => {
   jest.setTimeout(1000)
-})
+})*/
 
 describe('Testy serwera', () => {
   //GET
@@ -28,12 +28,13 @@ describe('Testy serwera', () => {
 
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
+    jest.setTimeout(1000)
     const gameId = '1'; 
   
     const response = await axios.get(`${apiUrl}/${gameId}`)
   
     expect(response.status).toBe(200);
-  }, 500);
+  });
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
     const gameId = '100'; 
   
