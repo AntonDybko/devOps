@@ -5,9 +5,14 @@ const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 
-/*beforeEach(async () => {
-  jest.setTimeout(1000)
-})*/
+beforeEach(x => {
+  setTimeout(() => {
+    x && x()
+  }, 1000)
+});
+afterAll(() => {
+  server.close();
+});
 
 describe('Testy serwera', () => {
   //GET
@@ -27,15 +32,10 @@ describe('Testy serwera', () => {
 
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
-    const config = {
-      timeout: 1000, // Set the timeout here
-    };
     const gameId = '1'; 
-  
-    const response = await axios.get(`${apiUrl}/${gameId}`, config)
-  
+    const response = await axios.get(`${apiUrl}/${gameId}`)
     expect(response.status).toBe(200);
-  }, 2000);
+  });
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
     const gameId = '100'; 
   
@@ -125,9 +125,5 @@ describe('Testy serwera', () => {
     }catch (error){
       expect(error.response.status).toBe(404);
     }
-  });
-
-  afterAll(() => {
-    server.close();
   });
 });
