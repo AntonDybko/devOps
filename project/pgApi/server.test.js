@@ -35,7 +35,7 @@ describe('Testy serwera', () => {
     const response = await axios.get(`${apiUrl}/${gameId}`, config)
   
     expect(response.status).toBe(200);
-  });
+  }, 2000);
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
     const gameId = '100'; 
   
