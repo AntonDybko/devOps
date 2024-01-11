@@ -60,7 +60,7 @@ describe('Testy serwera', () => {
 
 
 
-  /*//PUT
+  //PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
     const updatedGame = {
       title: 'Updated Game',
@@ -99,7 +99,7 @@ describe('Testy serwera', () => {
       expect(error.response.status).toBe(409);
     }
   });
-/*  //DELETE
+  //DELETE
   it('Powinien usunąć grę dla DELETE /:gameId', async () => {
     const gameIdToDelete = '1'; 
   
@@ -116,5 +116,5 @@ describe('Testy serwera', () => {
     }catch (error){
       expect(error.response.status).toBe(404);
     }
-  });*/
+  });
 });
