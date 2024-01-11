@@ -16,7 +16,6 @@ describe('Testy serwera', () => {
   });
   
   afterAll(() => {
-    console.log('hello')
     server.close();
   });
 });
