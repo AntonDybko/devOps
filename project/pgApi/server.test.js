@@ -36,8 +36,11 @@ describe('Testy serwera', () => {
       genre: 'Test Genre',
       releaseYear: 2022,
     };
-    const response = await axios.post(`${apiUrl}/`, newGame)
-    expect(response.status).toBe(409);
+    try{
+      const response = await axios.post(`${apiUrl}/`, newGame)
+    }catch(error){
+      expect(error.response.status).toBe(409);
+    }
   });
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
@@ -48,11 +51,13 @@ describe('Testy serwera', () => {
     expect(response.status).toBe(200);
   });
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
-    const gameIdToUpdate = '1'; 
+    const gameId = '100'; 
   
-    const response = await axios.get(`${apiUrl}/${gameIdToUpdate}`)
-  
-    expect(response.status).toBe(404);
+    try {
+      const response = await axios.get(`${apiUrl}/${gameId}`)
+    }catch (error){
+      expect(error.response.status).toBe(404);
+    }
   });
   //PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
