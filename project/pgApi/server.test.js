@@ -1,20 +1,14 @@
-//const request = require('supertest');
+const request = require('supertest');
 //const app = require('../mongoApi/server'); 
 const axios = require("axios");
 const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 
-/*beforeEach(x => {
-  setTimeout(() => {
-    x && x()
-  }, 1000)
-});*/
-afterAll(() => {
-  server.close();
-});
-
 describe('Testy serwera', () => {
+  afterAll(() => {
+    server.close();
+  });
   //GET
   it('Powinien zwrócić status 200 dla GET /', async () => {
     const response = await axios.get(`${apiUrl}/`);
@@ -33,7 +27,8 @@ describe('Testy serwera', () => {
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
     const gameId = '1'; 
-    const response = await axios.get(`${apiUrl}/${gameId}`)
+    //const response = await axios.get(`${apiUrl}/${gameId}`)
+    const response = await request(apiUrl).get(`/${gameId}`);
     expect(response.status).toBe(200);
   });
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
@@ -44,7 +39,7 @@ describe('Testy serwera', () => {
     }catch (error){
       expect(error.response.status).toBe(404);
     }
-  }, 2000);
+  });
 
   //POST
   it('Powinien zwrócić status 201 dla POST /', async () => {
@@ -67,7 +62,7 @@ describe('Testy serwera', () => {
     }catch(error){
       expect(error.response.status).toBe(409);
     }
-  }, 500);
+  });
 
   //PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
@@ -81,7 +76,7 @@ describe('Testy serwera', () => {
     const response = await axios.put(`${apiUrl}/${gameIdToUpdate}`, updatedGame)
   
     expect(response.status).toBe(200);
-  }, 1000);
+  });
   it('Powinien zwrócić 404, jeśli gra nie istnieje dla PUT /:gameId', async () => {
     const updatedGame = {
       title: 'Updated Game',
@@ -107,7 +102,7 @@ describe('Testy serwera', () => {
     }catch(error){
       expect(error.response.status).toBe(409);
     }
-  }, 3000);
+  });
   //DELETE
   it('Powinien usunąć grę dla DELETE /:gameId', async () => {
     const gameIdToDelete = '1'; 
@@ -115,7 +110,7 @@ describe('Testy serwera', () => {
     const response = await axios.delete(`${apiUrl}/${gameIdToDelete}`)
   
     expect(response.status).toBe(204);
-  }, 5000);
+  });
   
   it('Powinien zwrócić 404, jeśli gra nie istnieje dla DELETE /:gameId', async () => {
     const gameIdToDelete = '100'; 
