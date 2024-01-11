@@ -86,6 +86,18 @@ describe('Testy serwera', () => {
       expect(error.response.status).toBe(404);
     }
   });
+  it('Powinien zwrócić status 409, jeśli gra o takim tytułu istnieje dla PUT /', async () => {
+    const newGame = {
+      title: 'Updated Game',
+      genre: 'Test Genre',
+      releaseYear: 2022,
+    };
+    try{
+      const response = await axios.put(`${apiUrl}/`, newGame)
+    }catch(error){
+      expect(error.response.status).toBe(409);
+    }
+  });
   //DELETE
   it('Powinien usunąć grę dla DELETE /:gameId', async () => {
     const gameIdToDelete = '1'; 
