@@ -18,6 +18,30 @@ describe('Testy serwera', () => {
     expect(response.body).toEqual(expect.arrayContaining([])); 
   });
 
+  //POST
+  it('Powinien zwrócić status 201 dla POST /', async () => {
+    const newGame = {
+      title: 'Test Game',
+      genre: 'Test Genre',
+      releaseYear: 2022,
+    };
+    const response = await axios.post(`${apiUrl}/`, newGame)
+    expect(response.status).toBe(201);
+  });
+  it('Powinien zwrócić status 409, jeśli gra o takim tytułu istnieje dla POST /', async () => {
+    const newGame = {
+      title: 'Test Game',
+      genre: 'Test Genre',
+      releaseYear: 2022,
+    };
+    try{
+      const response = await axios.post(`${apiUrl}/`, newGame)
+    }catch(error){
+      expect(error.response.status).toBe(409);
+    }
+  });
+  
+
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
     const gameId = '1'; 
@@ -35,28 +59,7 @@ describe('Testy serwera', () => {
     }
   });
 
-  //POST
-  it('Powinien zwrócić status 201 dla POST /', async () => {
-    const newGame = {
-      title: 'Test Game',
-      genre: 'Test Genre',
-      releaseYear: 2022,
-    };
-    const response = await axios.post(`${apiUrl}/`, newGame)
-    expect(response.status).toBe(201);
-  });
-  /*it('Powinien zwrócić status 409, jeśli gra o takim tytułu istnieje dla POST /', async () => {
-    const newGame = {
-      title: 'Test Game',
-      genre: 'Test Genre',
-      releaseYear: 2022,
-    };
-    try{
-      const response = await axios.post(`${apiUrl}/`, newGame)
-    }catch(error){
-      expect(error.response.status).toBe(409);
-    }
-  });
+/*
 
   //PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
