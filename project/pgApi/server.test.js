@@ -5,11 +5,11 @@ const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 
-beforeEach(x => {
+/*beforeEach(x => {
   setTimeout(() => {
     x && x()
   }, 1000)
-});
+});*/
 afterAll(() => {
   server.close();
 });
