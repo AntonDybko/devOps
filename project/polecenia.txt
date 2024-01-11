@@ -1,6 +1,6 @@
-docker build -t apb_project_api:1.0.0 .
-docker tag apb_project_api:1.0.0 r4t00r/apb_project_api:1.0.0
-docker push r4t00r/apb_project_api:1.0.0
+docker build -t apb_project_api:2.0.0 .
+docker tag apb_project_api:1.0.0 r4t00r/apb_project_api:2.0.0
+docker push r4t00r/apb_project_api:2.0.0
 
 kubectl port-forward service/nginx-ingress-nginx-controller --address 0.0.0.0 80:80 
 

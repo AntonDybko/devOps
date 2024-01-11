@@ -9,7 +9,8 @@ const gameController = {
         });
     },
     getGame: (req, res) => {
-        pool.query(queries.getGame, (err, results) => {
+        const gameId = req.params.gameId;
+        pool.query(queries.getGame, [gameId], (err, results) => {
             if (err) res.status(500).json({ error: "Internal server error" });
             if (results.rowCount === 1) {
                 res.status(200).json(results.rows[0]);
