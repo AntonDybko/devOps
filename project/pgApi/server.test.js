@@ -5,10 +5,11 @@ const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
 
+beforeEach(async () => {
+  jest.setTimeout(1000)
+})
+
 describe('Testy serwera', () => {
-  beforeEach(async () => {
-    jest.setTimeout(1000)
-  })
   //GET
   it('Powinien zwrócić status 200 dla GET /', async () => {
     const response = await axios.get(`${apiUrl}/`);
