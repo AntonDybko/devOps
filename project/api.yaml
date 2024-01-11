@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: r4t00r/apb_project_api:2.0.0
+          image: r4t00r/apb_project_api:6.0.0
           readinessProbe:
             httpGet:
               path: /db-check
@@ -38,7 +38,7 @@ spec:
               cpu: "500m"
             requests:
               memory: "1Gi"
-              cpu: "100m"
+              cpu: "250m"
           envFrom:
             - secretRef:
                 name: secret

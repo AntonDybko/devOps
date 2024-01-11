@@ -23,13 +23,14 @@ const gameController = {
         const newGame = req.body;
         pool.query(queries.checkGameExists, [newGame.title], (err, results) => {
             if (err) res.status(500).json({ error: "Internal server error" });
-            if(results.rowCount.length){
-                res.status(409).json({error: "This game already exists"})
+            if(results.rowCount === 1){
+                res.status(409).json({error: "Game with this title already exists"})
+            }else {
+                pool.query(queries.postGame, [newGame.title, newGame.genre, newGame.releaseYear], (err2, results2) => {
+                    if (err2) res.status(500).json({ error: "Internal server error" });
+                    res.status(201).json(results2.rows[0]);
+                });
             }
-            pool.query(queries.postGame, [newGame.title, newGame.genre, newGame.releaseYear], (err2, results2) => {
-                if (err2) res.status(500).json({ error: "Internal server error" });
-                res.status(201).json(results2.rows[0]);
-            });
         })
     },
     putGame: (req, res) => {

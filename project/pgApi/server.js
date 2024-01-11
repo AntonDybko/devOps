@@ -5,7 +5,7 @@ const games = require("./routes/games");
 const swaggerUI = require("swagger-ui-express");
 const specs = require("./swaggerConfig");
 const healthController = require("./controllers/healthController");
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(bodyParser.json());

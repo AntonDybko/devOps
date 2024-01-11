@@ -1,8 +1,14 @@
 pipeline {
     agent any
 
+        environment{
+            JENKINS_CONTAINER_DB_PORT = "5432"
+            JENKINS_CONTAINER_DB_NAME = "postgres"
+            JENKINS_CONTAINER_APP_PORT = "5000"
+        }
+
         options {
-            timeout(10)
+            timeout(5)
             gitLabConnection('GitLab')
         }
         triggers {
@@ -14,13 +20,7 @@ pipeline {
         }
 
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-
-        stage('Test') {
+        stage('Test api') {
             agent {
                 docker { image 'node:latest' }
             }
@@ -34,11 +34,28 @@ pipeline {
             }
         }
 
+        stage('Test connection to database'){
+            steps{
+                script{
+                    docker.build('postgres-container', './database')
+
+                     docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
+
+                            docker.image('r4t00r/apb_project_api:6.0.0').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
+
+                                sh 'sleep 10'
+                                sh "npm run test"
+                            }
+                     }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 dir('project') {
                     script {
-                        docker.build('r4t00r/apb_project_api:2.0.0')
+                        docker.build('r4t00r/apb_project_api:6.0.0')
                     }
                 }
             }
@@ -56,7 +73,7 @@ pipeline {
                 }
 
                 script {
-                    sh 'docker push r4t00r/apb_project_api:2.0.0'
+                    sh 'docker push r4t00r/apb_project_api:6.0.0'
                 }
             }
         }

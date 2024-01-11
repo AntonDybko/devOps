@@ -109,6 +109,8 @@ router.get("/", gameController.getGames);
  *                              $ref: '#/components/schemas/Game'
  *              500:
  *                  description: internal server error
+ *              409:
+ *                  description: game with this title already exists
  *                              
  */
 router.post("/", gameController.postGame);
