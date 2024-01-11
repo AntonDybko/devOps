@@ -46,7 +46,6 @@ describe('Testy serwera', () => {
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
     const gameId = '1'; 
     const response = await axios.get(`${apiUrl}/${gameId}`)
-    //const response = await request(apiUrl).get(`/${gameId}`);
     expect(response.status).toBe(200);
   });
   it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
@@ -59,7 +58,7 @@ describe('Testy serwera', () => {
     }
   });
 
-/*
+
 
   //PUT
   it('Powinien zaktualizować grę dla PUT /:gameId', async () => {
@@ -100,7 +99,7 @@ describe('Testy serwera', () => {
       expect(error.response.status).toBe(409);
     }
   });
-  //DELETE
+/*  //DELETE
   it('Powinien usunąć grę dla DELETE /:gameId', async () => {
     const gameIdToDelete = '1'; 
   
