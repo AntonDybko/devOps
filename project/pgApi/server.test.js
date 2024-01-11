@@ -4,7 +4,6 @@ const axios = require("axios");
 const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
-const jest = require('jest');
 
 /*beforeEach(async () => {
   jest.setTimeout(1000)
@@ -28,10 +27,12 @@ describe('Testy serwera', () => {
 
   //GET BY ID
   it('Powinien zwrócić grę dla GET /:gameId', async () => {
-    jest.setTimeout(1000)
+    const config = {
+      timeout: 1000, // Set the timeout here
+    };
     const gameId = '1'; 
   
-    const response = await axios.get(`${apiUrl}/${gameId}`)
+    const response = await axios.get(`${apiUrl}/${gameId}`, config)
   
     expect(response.status).toBe(200);
   });
