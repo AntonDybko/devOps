@@ -14,6 +14,13 @@ const pool = new Pool({
     password: process.env.POSTGRES_PASSWORD || "admin",
     port: process.env.POSTGRES_PORT || 5432
 });
+/*{
+    user: 'postgres',
+    host: 'postgres',
+    database: 'postgres',
+    password: 'admin',
+    port: 'tcp://172.17.0.2:5432'
+  }*/
 /*const pool = new Pool({
     user:"postgres",
     host: process.env.POSTGRES_HOST,
