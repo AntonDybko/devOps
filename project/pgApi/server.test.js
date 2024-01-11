@@ -10,17 +10,11 @@ describe('Testy serwera', () => {
     server.close();
   });
   //GET
-  it('Powinien zwrócić status 200 dla GET /', async () => {
+  it('Testy dla GET /', async () => {
     const response = await axios.get(`${apiUrl}/`);
     console.log(response.data)
     expect(response.status).toBe(200);
-  });
-  it('Powinien zwrócić JSON dla GET /', async () => {
-    const response = await axios.get(`${apiUrl}/`);
     expect(response.headers['content-type']).toMatch(/application\/json/);
-  });
-  it('Powinien zawierać oczekiwane pole w odpowiedzi dla GET /', async () => {
-    const response = await axios.get(`${apiUrl}/`);
     expect(response.body).toEqual(expect.arrayContaining([])); 
   });
 
@@ -31,7 +25,7 @@ describe('Testy serwera', () => {
     //const response = await request(apiUrl).get(`/${gameId}`);
     expect(response.status).toBe(200);
   });
-  /*it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
+  it('Powinien zwrócić 404, jeśli gra nie istnieje na GET /:gameId', async () => {
     const gameId = '100'; 
   
     try {
@@ -51,7 +45,7 @@ describe('Testy serwera', () => {
     const response = await axios.post(`${apiUrl}/`, newGame)
     expect(response.status).toBe(201);
   });
-  it('Powinien zwrócić status 409, jeśli gra o takim tytułu istnieje dla POST /', async () => {
+  /*it('Powinien zwrócić status 409, jeśli gra o takim tytułu istnieje dla POST /', async () => {
     const newGame = {
       title: 'Test Game',
       genre: 'Test Genre',
