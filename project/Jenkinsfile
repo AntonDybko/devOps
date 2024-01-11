@@ -21,6 +21,14 @@ pipeline {
 
     stages {
 
+        stage('Cleanup Docker') {
+            steps {
+                script {
+                    sh 'docker system prune -a -f'
+                }
+            }
+        }
+
         stage('Test api'){
             steps{
                 script{
