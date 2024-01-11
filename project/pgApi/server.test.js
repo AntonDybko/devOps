@@ -4,6 +4,7 @@ const axios = require("axios");
 const { server } = require("./server.js");
 const PORT =  process.env.PORT;
 const apiUrl = `http://localhost:${PORT}/games`;
+const jest = require('jest');
 
 beforeEach(async () => {
   jest.setTimeout(1000)
