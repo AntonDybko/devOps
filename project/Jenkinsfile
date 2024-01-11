@@ -38,10 +38,11 @@ pipeline {
             steps{
                 script{
                     docker.build('postgres-container', './project/testDb')
+                    docker.build('api-container', './project')
 
-                     docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
+                    docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
 
-                            docker.image('r4t00r/apb_project_api:7.0.0').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
+                            docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e HOST=${JENKINS_CONTAINER_DB_NAME} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
 
                                 sh 'sleep 10'
                                 sh 'npm install'
@@ -77,15 +78,6 @@ pipeline {
                     sh 'docker push r4t00r/apb_project_api:6.0.0'
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline success!'
-        }
-        failure {
-            echo 'Pipeline error.'
         }
     }
 }
