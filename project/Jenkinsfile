@@ -20,19 +20,6 @@ pipeline {
         }
 
     stages {
-        /*stage('Test api') {
-            agent {
-                docker { image 'node:latest' }
-            }
-            steps {
-                dir('project/pgApi') {
-                    script {
-                        sh 'npm install'
-                        sh 'npm run test'
-                    }
-                }
-            }
-        }*/
 
         stage('Test api'){
             steps{
@@ -40,7 +27,6 @@ pipeline {
                     docker.build('postgres-container', './project/testDb')
                     docker.build('api-container', './project')
                     
-                    //docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
                     docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT} -v ./project/testDb/init.sql:/docker-entrypoint-initdb.d/init.sql") { postgresContainer ->
 
                             docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e POSTGRES_HOST=${JENKINS_CONTAINER_DB_NAME} -e POSTGRES_PORT=${JENKINS_CONTAINER_DB_PORT} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->

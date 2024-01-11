@@ -1,7 +1,9 @@
 //const request = require('supertest');
 //const app = require('../mongoApi/server'); 
 const axios = require("axios");
-const apiUrl = "http://localhost:8000/games";
+const { server } = require("./server.js");
+const PORT =  process.env.PORT;
+const apiUrl = `http://localhost:${PORT}/games`;
 
 describe('Testy serwera', () => {
   //GET
@@ -96,5 +98,9 @@ describe('Testy serwera', () => {
     }catch (error){
       expect(error.response.status).toBe(404);
     }
+  });
+
+  afterAll(() => {
+    server.close();
   });
 });
