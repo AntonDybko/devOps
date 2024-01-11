@@ -1,6 +1,6 @@
-docker build -t apb_project_api:6.0.0 .
-docker tag apb_project_api:6.0.0 r4t00r/apb_project_api:6.0.0
-docker push r4t00r/apb_project_api:6.0.0
+docker build -t apb_project_api:7.0.0 .
+docker tag apb_project_api:7.0.0 r4t00r/apb_project_api:7.0.0
+docker push r4t00r/apb_project_api:7.0.0
 
 
 kubectl exec -it api-postgresql-0 bash
