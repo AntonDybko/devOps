@@ -11,6 +11,29 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+const pool = require("../dbConfig");
+
+
+async function createAlbumsTable() {
+    try {
+      const query = `
+        CREATE TABLE IF NOT EXISTS games (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            genre VARCHAR(255) NOT NULL,
+            release_year INT NOT NULL
+        );
+      `;
+  
+      await pool.query(query);
+      console.log('Albums table created');
+    } catch (err) {
+      console.error(err);
+      console.error('Albums table creation failed');
+    }
+  }
+  
+await createAlbumsTable();
 
 app.get('/healthz', healthController.healthCheck);
 app.get('/db-check', healthController.healthCheckOfDb);
