@@ -24,8 +24,9 @@ pipeline {
         stage('Cleanup Docker') {
             steps {
                 script {
-                    sh 'docker ps -a'
-                    sh 'docker system prune -a -f'
+                    //sh 'docker ps -a'
+                    //sh 'docker system prune -a -f'
+                    sh 'service docker restart'
                 }
             }
         }
