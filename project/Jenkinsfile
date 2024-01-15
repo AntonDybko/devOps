@@ -20,20 +20,20 @@ pipeline {
         }
 
     stages {
-
         stage('Test api') {
-            steps{
-                script{
-                    docker.build('api-container', './project')
-                    docker.image('api-container') { AppContainer ->
-                        dir('project/pgApi') {
-                            sh 'npm install'
-                            sh "npm run test"
-                        }
+            agent {
+                docker { image 'node:latest' }
+            }
+            steps {
+                dir('project/pgApi') {
+                    script {
+                        sh 'npm install'
+                        sh 'npm test'
                     }
                 }
             }
         }
+
 
         /*stage('Test api'){
             steps{
