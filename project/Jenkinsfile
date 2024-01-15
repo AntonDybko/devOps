@@ -25,9 +25,11 @@ pipeline {
             steps{
                 script{
                     docker.build('api-container', './project')
-                    dir('project/pgApi') {
-                        sh 'npm install'
-                        sh "npm run test"
+                    docker.image('api-container') { AppContainer ->
+                        dir('project/pgApi') {
+                            sh 'npm install'
+                            sh "npm run test"
+                        }
                     }
                 }
             }
