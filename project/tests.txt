@@ -1,0 +1,9 @@
+docker build -t postgres_apb:2.0.0 .
+docker tag postgres_apb:2.0.0 r4t00r/postgres_apb:2.0.0
+docker push r4t00r/postgres_apb:1.0.0
+
+docker build -t apb_project_api:1b .
+
+docker run --name postgres-container -p 5432:5432 -d postgres_apb:2.0.0
+docker run --name postgres-container -v "/mnt/c/Users/AntonDybko/apb_IT/dybko-anton/project/testDb/init.sql:/docker-entrypoint-initdb.d/init.sql" -p 5432:5432 -d r4t00r/postgres_apb:2.0.0
+docker run --name api-container -p 8000:8000 -e POSTGRES_HOST=postgres -e POSTGRES_PORT=5432 --link "4ebc25d390b0:postgres" -d apb_project_api:1b

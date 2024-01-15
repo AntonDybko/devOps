@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-        /*environment{
+        environment{
             JENKINS_CONTAINER_DB_PORT = "5432"
             JENKINS_CONTAINER_DB_NAME = "postgres"
             JENKINS_CONTAINER_APP_PORT = "8000"
@@ -17,17 +17,18 @@ pipeline {
                 triggerOnMergeRequest: true,
                 branchFilterType: 'All',
                 addVoteOnMergeRequest: true)
-        }*/
+        }
 
     stages {
 
-        stage('Cleanup Docker') {
+        /*stage('Cleanup Docker') {
             steps {
                 script {
+                    sh 'docker ps -a'
                     sh 'docker system prune -a -f'
                 }
             }
-        }
+        }*/
 
         stage('Test api'){
             steps{
@@ -35,7 +36,8 @@ pipeline {
                     docker.build('postgres-container', './project/testDb')
                     docker.build('api-container', './project')
                     
-                    docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT} -v ./project/testDb/init.sql:/docker-entrypoint-initdb.d/init.sql") { postgresContainer ->
+                    //docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT} -v ./project/testDb/init.sql:/docker-entrypoint-initdb.d/init.sql")
+                    docker.image('postgres-container').withRun("-p ${JENKINS_CONTAINER_DB_PORT}:${JENKINS_CONTAINER_DB_PORT}") { postgresContainer ->
 
                             docker.image('api-container').inside("-p ${JENKINS_CONTAINER_APP_PORT}:${JENKINS_CONTAINER_APP_PORT} -e POSTGRES_HOST=${JENKINS_CONTAINER_DB_NAME} -e POSTGRES_PORT=${JENKINS_CONTAINER_DB_PORT} --link ${postgresContainer.id}:${JENKINS_CONTAINER_DB_NAME}") { AppContainer ->
                                 dir('project/pgApi') {

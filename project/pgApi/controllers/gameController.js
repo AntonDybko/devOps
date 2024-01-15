@@ -5,6 +5,7 @@ const gameController = {
     getGames: (req, res) => {
         pool.query(queries.getGames, (err, results) => {
             if (err) res.status(500).json({ error: "Internal server error" });
+            console.log(results)
             res.status(200).json(results.rows);
         });
     },
@@ -36,7 +37,7 @@ const gameController = {
     putGame: (req, res) => {
         const gameId = req.params.gameId;
         const updatedGame = req.body;
-        pool.query(queries.checkGameExists, [newGame.title], (err, results) => {
+        pool.query(queries.checkGameExists, [updatedGame.title], (err, results) => {
             if (err) res.status(500).json({ error: "Internal server error" });
             if(results.rowCount === 1){
                 res.status(409).json({error: "Game with this title already exists"})
