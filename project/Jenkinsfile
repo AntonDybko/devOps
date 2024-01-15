@@ -21,17 +21,19 @@ pipeline {
 
     stages {
 
-        stage('Cleanup Docker') {
-            steps {
-                script {
-                    //sh 'docker ps -a'
-                    //sh 'docker system prune -a -f'
-                    sh 'service docker restart'
+        stage('Test api') {
+            steps{
+                script{
+                    docker.build('api-container', './project')
+                    dir('project/pgApi') {
+                        sh 'npm install'
+                        sh "npm run test"
+                    }
                 }
             }
         }
 
-        stage('Test api'){
+        /*stage('Test api'){
             steps{
                 script{
                     docker.build('postgres-container', './project/testDb')
@@ -50,7 +52,7 @@ pipeline {
                      }
                 }
             }
-        }
+        }*/
 
         stage('Build Docker Image') {
             steps {
