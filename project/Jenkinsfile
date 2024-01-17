@@ -1,11 +1,11 @@
 pipeline {
     agent any
 
-        environment{
+        /*environment{
             JENKINS_CONTAINER_DB_PORT = "5432"
             JENKINS_CONTAINER_DB_NAME = "postgres"
             JENKINS_CONTAINER_APP_PORT = "8000"
-        }
+        }*/
 
         options {
             timeout(5)
@@ -60,7 +60,7 @@ pipeline {
             steps {
                 dir('project') {
                     script {
-                        docker.build('r4t00r/apb_project_api:9.0.0')
+                        docker.build('r4t00r/apb_project_api:3c')
                     }
                 }
             }
@@ -78,7 +78,7 @@ pipeline {
                 }
 
                 script {
-                    sh 'docker push r4t00r/apb_project_api:9.0.0'
+                    sh 'docker push r4t00r/apb_project_api:3c'
                 }
             }
         }

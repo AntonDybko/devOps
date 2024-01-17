@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: r4t00r/apb_project_api:6.0.0
+          image: r4t00r/apb_project_api:3c
           readinessProbe:
             httpGet:
               path: /db-check
