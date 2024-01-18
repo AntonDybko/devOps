@@ -7,6 +7,7 @@ describe("TEST", () => {
   it("test api work", async () => {
     const res = await axios(`${apiUrl}/healthz`);
     expect(res.status).toBe(200);
+    //zmiana
   });
 
   afterAll(() => {

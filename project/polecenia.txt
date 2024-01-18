@@ -1,6 +1,6 @@
-docker build -t apb_project_api:3b .
-docker tag apb_project_api:3a r4t00r/apb_project_api:3b
-docker push r4t00r/apb_project_api:3b
+docker build -t apb_project_api:3c .
+docker tag apb_project_api:3c r4t00r/apb_project_api:3c
+docker push r4t00r/apb_project_api:3c
 
 
 kubectl exec -it api-postgresql-0 bash
@@ -47,8 +47,9 @@ helm get values _ -a
 
 final:
 
-kubectl delete ingressclass nginx
+minikube stop
 minikube delete --all
+kubectl delete ingressclass nginx
 
 minikube start
 minikube addons enable ingress
